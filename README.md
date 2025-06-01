@@ -2,7 +2,7 @@
 
 Proyecto de Base de Datos II – Simulación de un sistema de compras en línea.
 
-![Landing Page](./Hero.jpg)
+![Landing Page](./assets/Hero.jpg)
 
 ## 🧠 Descripción
 
