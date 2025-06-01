@@ -1,13 +1,14 @@
-import { Factura } from './components/factura'
-import './App.css'
+import { LandingPage } from './components/LandingPage'
+import { CrudSection } from './components/CrudSection';
 
 function App() {
   
   return (
-    <div>
-      <Factura />
+    <div className='mx-10 justify-center'> 
+      <LandingPage />
+      <CrudSection />
     </div>
   )
 }
 
-export default App
+export default App;
