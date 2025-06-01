@@ -10,7 +10,6 @@ Este proyecto consiste en una plataforma que simula el funcionamiento de una tie
 
 ## 🚀 Tecnologías
 
-### Backend
 - **React:** Plataforma moderna, rápida y escalable.
 - **JavaScript:** Lenguaje versátil para el desarrollo del frontend.
 - **Firebase - Firestore:** Base de datos NoSQL en tiempo real.
@@ -18,7 +17,7 @@ Este proyecto consiste en una plataforma que simula el funcionamiento de una tie
 
 ## 📄 Documentación
 
-Puedes descargar el documento con el diseño y explicación de la base de datos haciendo clic [aquí](./Documentación%20-%20Base%20de%20datos%20MegaShop.pdf) o en el botón de la landing page.
+Puedes descargar el documento con el diseño y explicación de la base de datos haciendo clic [aquí](./assets/Documentación%20-%20Base%20de%20datos%20MegaShop.pdf) o en el botón de la landing page.
 
 ## 👥 Integrantes
 
