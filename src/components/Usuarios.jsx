@@ -13,7 +13,7 @@ export default function Usuarios() {
     Roles: ["Cliente"],
   });
 
-  const rolesDisponibles = ["Cliente", "Proveedor", "Vendedor", "Administrador"];
+  const rolesDisponibles = ["Cliente", "Proveedor", "Vendedor"];
 
   const getData = async () => {
     try {

@@ -39,7 +39,7 @@ function Facturas() {
         facturas.getMetodosPago(),
         facturas.getProductos()
       ]);
-      
+
       setListaFacturas(facturasData);
       setUsuarios(usuariosData);
       setMetodosPago(metodosData);
@@ -60,21 +60,21 @@ function Facturas() {
   const handleDetalleChange = (index, field, value) => {
     const newDetalles = [...formData.detalles];
     newDetalles[index][field] = value;
-    
+
     // Calcular subtotal automáticamente
     if (field === 'cantidad' || field === 'precioUnitario') {
       const cantidad = parseFloat(field === 'cantidad' ? value : newDetalles[index].cantidad) || 0;
       const precio = parseFloat(field === 'precioUnitario' ? value : newDetalles[index].precioUnitario) || 0;
       newDetalles[index].subtotal = cantidad * precio;
     }
-    
+
     // Auto-completar precio unitario cuando se selecciona un producto
     if (field === 'idProducto' && value) {
       const producto = productos.find(p => p.id === value);
       if (producto && producto.precio) {
         newDetalles[index].precioUnitario = producto.precio;
         newDetalles[index].producto = producto.nombre || producto.Nombre || "";
-        
+
         // Recalcular subtotal si ya hay cantidad
         const cantidad = parseFloat(newDetalles[index].cantidad) || 0;
         if (cantidad > 0) {
@@ -82,7 +82,7 @@ function Facturas() {
         }
       }
     }
-    
+
     setFormData((prev) => ({ ...prev, detalles: newDetalles }));
   };
 
@@ -113,16 +113,16 @@ function Facturas() {
   };
 
   const validarFormulario = () => {
-    if (!formData.estado || !formData.fecha || !formData.clienteId || 
-        !formData.vendedorId || !formData.metodoPagoId) {
+    if (!formData.estado || !formData.fecha || !formData.clienteId ||
+      !formData.vendedorId || !formData.metodoPagoId) {
       alert("Por favor complete todos los campos obligatorios");
       return false;
     }
 
     // Validar que haya al menos un detalle válido
-    const detallesValidos = formData.detalles.filter(detalle => 
-      detalle.idProducto && 
-      parseFloat(detalle.cantidad) > 0 && 
+    const detallesValidos = formData.detalles.filter(detalle =>
+      detalle.idProducto &&
+      parseFloat(detalle.cantidad) > 0 &&
       parseFloat(detalle.precioUnitario) > 0
     );
 
@@ -136,16 +136,16 @@ function Facturas() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validarFormulario()) return;
 
     try {
       setLoading(true);
-      
+
       // Filtrar solo detalles válidos
-      const detallesValidos = formData.detalles.filter(detalle => 
-        detalle.idProducto && 
-        parseFloat(detalle.cantidad) > 0 && 
+      const detallesValidos = formData.detalles.filter(detalle =>
+        detalle.idProducto &&
+        parseFloat(detalle.cantidad) > 0 &&
         parseFloat(detalle.precioUnitario) > 0
       );
 
@@ -166,7 +166,7 @@ function Facturas() {
         await facturas.createFactura(dataToSubmit);
         alert("Factura creada correctamente");
       }
-      
+
       await cargarDatos();
       limpiarFormulario();
     } catch (error) {
@@ -356,61 +356,55 @@ function Facturas() {
 
           {formData.detalles.map((detalle, index) => (
             <div key={index} className="border border-gray-500 p-3 rounded space-y-2">
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-2">
-                <select
-                  value={detalle.idProducto}
-                  onChange={(e) => {
-                    handleDetalleChange(index, 'idProducto', e.target.value);
-                  }}
-                  className="p-2 text-black rounded bg-gray-200 text-sm"
-                  required
-                >
-                  <option value="">Seleccionar Producto</option>
-                  {productos.map((producto) => (
-                    <option key={producto.id} value={producto.id}>
-                      {producto.nombre || producto.Nombre || producto.id}
-                    </option>
-                  ))}
-                </select>
-                
-                <input
-                  type="number"
-                  placeholder="Cantidad"
-                  value={detalle.cantidad}
-                  onChange={(e) => handleDetalleChange(index, 'cantidad', e.target.value)}
-                  className="p-2 text-black rounded bg-gray-200 text-sm"
-                  min="1"
-                  step="1"
-                  required
-                />
-                
-                <input
-                  type="number"
-                  step="0.01"
-                  placeholder="Precio Unit."
-                  value={detalle.precioUnitario}
-                  onChange={(e) => handleDetalleChange(index, 'precioUnitario', e.target.value)}
-                  className="p-2 text-black rounded bg-gray-200 text-sm"
-                  min="0"
-                  required
-                />
-                
-                <input
-                  type="text"
-                  placeholder="Producto"
-                  value={detalle.producto}
-                  readOnly
-                  className="p-2 text-black rounded bg-gray-300 text-sm"
-                />
-                
-                <input
-                  type="number"
-                  placeholder="Subtotal"
-                  value={detalle.subtotal}
-                  readOnly
-                  className="p-2 text-black rounded bg-gray-300 text-sm"
-                />
-                
+              <div className="flex justify-between">
+                <div className="grid grid-cols-1 md:grid-cols-6 gap-2">
+                  <select
+                    value={detalle.idProducto}
+                    onChange={(e) => {
+                      handleDetalleChange(index, 'idProducto', e.target.value);
+                    }}
+                    className="p-2 text-black rounded bg-gray-200 text-sm"
+                    required
+                  >
+                    <option value="">Seleccionar Producto</option>
+                    {productos.map((producto) => (
+                      <option key={producto.id} value={producto.id}>
+                        {producto.nombre || producto.Nombre || producto.id}
+                      </option>
+                    ))}
+                  </select>
+
+                  <input
+                    type="number"
+                    placeholder="Cantidad"
+                    value={detalle.cantidad}
+                    onChange={(e) => handleDetalleChange(index, 'cantidad', e.target.value)}
+                    className="p-2 text-black rounded bg-gray-200 text-sm"
+                    min="1"
+                    step="1"
+                    required
+                  />
+
+                  <input
+                    type="number"
+                    step="0.01"
+                    placeholder="Precio Unit."
+                    value={detalle.precioUnitario}
+                    onChange={(e) => handleDetalleChange(index, 'precioUnitario', e.target.value)}
+                    className="p-2 text-black rounded bg-gray-200 text-sm"
+                    min="0"
+                    required
+                    readOnly
+                  />
+
+                  <input
+                    type="number"
+                    placeholder="Subtotal"
+                    value={detalle.subtotal}
+                    readOnly
+                    className="p-2 text-black rounded bg-gray-300 text-sm"
+                  />
+                </div>
                 <button
                   type="button"
                   onClick={() => eliminarDetalle(index)}
@@ -462,12 +456,11 @@ function Facturas() {
               <div className="flex justify-between items-start">
                 <div className="space-y-2 flex-1">
                   <p><strong>ID:</strong> {factura.id}</p>
-                  <p><strong>Estado:</strong> 
-                    <span className={`ml-2 px-2 py-1 rounded text-sm ${
-                      factura.Estado === 'Pagado' ? 'bg-green-600' :
+                  <p><strong>Estado:</strong>
+                    <span className={`ml-2 px-2 py-1 rounded text-sm ${factura.Estado === 'Pagado' ? 'bg-green-600' :
                       factura.Estado === 'Pendiente' ? 'bg-yellow-600' :
-                      'bg-red-600'
-                    }`}>
+                        'bg-red-600'
+                      }`}>
                       {factura.Estado}
                     </span>
                   </p>
@@ -476,7 +469,7 @@ function Facturas() {
                   <p><strong>Cliente:</strong> {factura.clienteNombre || factura.Cliente?.id || 'N/A'}</p>
                   <p><strong>Vendedor:</strong> {factura.vendedorNombre || factura.Vendedor?.id || 'N/A'}</p>
                   <p><strong>Método Pago:</strong> {factura.metodoPagoNombre || factura.MetodoPago?.id || 'N/A'}</p>
-                  
+
                   {factura.Detalles && factura.Detalles.length > 0 && (
                     <div>
                       <strong>Productos:</strong>
@@ -492,7 +485,7 @@ function Facturas() {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="flex flex-col gap-2 ml-4">
                   <button
                     onClick={() => handleEditar(factura)}
@@ -501,7 +494,7 @@ function Facturas() {
                     Editar
                   </button>
                   <button
-                    onClick={() => handleEliminar(factura.id)} 
+                    onClick={() => handleEliminar(factura.id)}
                     className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm"
                   >
                     Eliminar

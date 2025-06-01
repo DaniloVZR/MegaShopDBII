@@ -5,8 +5,8 @@ import { integrantes } from "../constants";
 export const LandingPage = () => {
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/documentacion-megashop.pdf";
-    link.download = "documentacion-megashop.pdf";
+    link.href = "/Documentación - Base de datos MegaShop.pdf";
+    link.download = "Documentación - Base de datos MegaShop.pdf";
     link.click();
   };
 
